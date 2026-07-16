@@ -1,18 +1,28 @@
-import React from 'react';
 import { ExternalLink, Copy, Check } from 'lucide-react';
+import React, { useState } from 'react';
 import type { Post } from '../types';
 
-export const PostCard: React.FC<{ post: Post }> = ({ post }) => {
-  const [copied, setCopied] = React.useState(false);
+interface PostCardProps {
+  post: Post;
+  onClick: () => void;
+}
 
-  const handleCopy = () => {
+export const PostCard: React.FC<PostCardProps> = ({ post, onClick }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
     navigator.clipboard.writeText(post.description);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="post-card glass">
+    <div className="post-card glass" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="post-meta">
         <span>{post.author ? `@${post.author}` : 'Unknown Author'}</span>
       </div>
@@ -40,6 +50,7 @@ export const PostCard: React.FC<{ post: Post }> = ({ post }) => {
           rel="noopener noreferrer" 
           className="btn btn-primary"
           style={{ flex: 1, justifyContent: 'center' }}
+          onClick={handleLinkClick}
         >
           <ExternalLink size={16} /> Перейти
         </a>

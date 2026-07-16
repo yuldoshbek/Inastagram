@@ -3,12 +3,14 @@ import { Database, Plus, Download, LayoutGrid } from 'lucide-react';
 import type { Post } from './types';
 import { PostCard } from './components/PostCard';
 import { ImportModal } from './components/ImportModal';
+import { PostModal } from './components/PostModal';
 import { initialPosts } from './data/initialData';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   // Load from local storage or use initial data
   useEffect(() => {
@@ -101,22 +103,31 @@ function App() {
             <h1>{selectedCategory}</h1>
             <p style={{ color: 'var(--text-secondary)' }}>Найдено постов: {filteredPosts.length}</p>
           </div>
-          <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>
+          <button className="btn btn-primary" onClick={() => setIsImportModalOpen(true)}>
             <Plus size={18} /> Добавить пост
           </button>
         </header>
 
         <div className="post-grid">
           {filteredPosts.map(post => (
-            <PostCard key={post.id} post={post} />
+            <PostCard 
+              key={post.id} 
+              post={post} 
+              onClick={() => setSelectedPost(post)} 
+            />
           ))}
         </div>
       </main>
 
       <ImportModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        isOpen={isImportModalOpen} 
+        onClose={() => setIsImportModalOpen(false)} 
         onImport={handleImport}
+      />
+
+      <PostModal 
+        post={selectedPost} 
+        onClose={() => setSelectedPost(null)} 
       />
     </div>
   );
