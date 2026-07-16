@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink, Copy, Check } from 'lucide-react';
-import { Post } from '../types';
+import type { Post } from '../types';
 
 export const PostCard: React.FC<{ post: Post }> = ({ post }) => {
   const [copied, setCopied] = React.useState(false);

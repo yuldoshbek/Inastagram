@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Database, Plus, Download, LayoutGrid } from 'lucide-react';
-import { Post } from './types';
+import type { Post } from './types';
 import { PostCard } from './components/PostCard';
 import { ImportModal } from './components/ImportModal';
 import { initialPosts } from './data/initialData';

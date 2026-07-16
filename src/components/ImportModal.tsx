@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Upload } from 'lucide-react';
-import { Post } from '../types';
+import type { Post } from '../types';
 
 interface ImportModalProps {
   isOpen: boolean;
